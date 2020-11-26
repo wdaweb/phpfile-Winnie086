@@ -54,8 +54,9 @@ if(empty($_FILES['img']['tmp_name'])){
         "note"=>$_POST['note']
     ];
 
-    // print_r($row);
+    print_r($row);
     save("upload",$row);
+    to('manage.php');
 }
 
 
@@ -70,6 +71,12 @@ if(empty($_FILES['img']['tmp_name'])){
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/4233378c09.js" crossorigin="anonymous"></script>
     <style>
+    form{
+        border:;
+        margin:0 auto;
+    }
+
+
     table{
         border:3px double;
         border-collapse:collapse;
@@ -125,7 +132,7 @@ echo "<td>檔案名稱</td>";
 echo "<td>檔案類型</td>";
 echo "<td>檔案說明</td>";
 echo "<td>下載</td>";
-echo "<td>操作</td>";
+echo "<td colspan='2' style='text-align:center'>操作</td>";
 
 foreach($rows as $row){
     
@@ -147,10 +154,9 @@ foreach($rows as $row){
     echo "<td>{$row['type']}</td>";
     echo "<td>{$row['note']}</td>";
     echo "<td><a href='{$row['path']}' download>下載</a></td>";
-    echo "<td><a class='primary' href='edit.php?id={$row['id']}'>編輯</a>";
-    echo "<a class='danger' href='del.php?id={$row['id']}'>刪除</a></td>";
+    echo "<td><a class='primary' href='edit.php?id={$row['id']}'>編輯</a></td>";
+    echo "<td><a class='danger' href='del.php?id={$row['id']}'>刪除</a></td>";
    
-
 
 
     echo "</tr>";
