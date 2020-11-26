@@ -6,6 +6,49 @@
  * 4.顯示檔案列表
  */
 
+date_default_timezone_set("Asia,Taipei");
+
+
+if(empty($_FILES['img']['tmp_name'])){
+// if(empty($_FILES['img下面變數的名稱']['tmp_name'])){
+
+}else{
+    echo "檔案原始名稱:".$_FILES['img']['name'];
+    echo "<br>檔案上傳成功";
+    echo "<br>原始上傳路徑:".$_FILES['img']['tmp_name'];
+    
+    $subname="";
+    $subname=explode('.',$_FILES['img']['name']);
+    echo $subname=array_pop($subname);
+
+    
+    
+    
+    // 用switch取得副檔名
+    // switch($_FILES['img']['type']){
+        
+        //     case "image/jpeg":
+            //         $subname=".jpg";
+            //     break;
+            
+            //     case "image/png":
+                //         $subname=".png";
+                //     break;
+                
+                //     case "image/gif":
+                    //         $subname=".gif";
+                    //     break;
+                    // }
+    
+                    
+    $filename=date("Ymdhis").".".;
+    move_uploaded_file($_FILES['img']['tmp_name'],"./images/".$_FILES['img']['name']);
+
+}
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +62,11 @@
 <body>
  <h1 class="header">檔案上傳練習</h1>
  <!----建立你的表單及設定編碼----->
+
+<form action="?" method="post" enctype="multipart/form-data">
+    <input type="file" name="img">
+    <input type="submit" value="上傳">
+</form>
 
 
 
