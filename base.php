@@ -1,6 +1,6 @@
 <?php
 
-$dsn="mysql:host=localhost;dbname=invoice;charset=utf8";
+$dsn="mysql:host=localhost;dbname=file;charset=utf8";
 $pdo=new PDO($dsn,'root','');
 
 date_default_timezone_set("Asia/Taipei");
@@ -114,7 +114,7 @@ function update($table,$array){
         //$tmp[]="`".$key."`='".$value."'";
     }
     $sql=$sql.implode(",",$tmp) . " where `id`='{$array['id']}'";
-   // echo $sql;
+//    echo $sql;
     $pdo->exec($sql);
 }
 
@@ -122,7 +122,7 @@ function insert($table,$array){
     global $pdo;
     $sql="insert into $table(`" . implode("`,`",array_keys($array)) . "`) values('".implode("','",$array)."')";
 
-
+    // echo $sql;
     $pdo->exec($sql);
 }
 
