@@ -6,9 +6,10 @@
  * 4.顯示檔案列表
  */
 
+ include_once "base.php";
+
 // 把美國時間調成台灣時間
 date_default_timezone_set("Asia,Taipei");
-
 
 if(empty($_FILES['img']['tmp_name'])){
 // if(empty($_FILES['img下面變數的名稱']['tmp_name'])){
@@ -21,9 +22,7 @@ if(empty($_FILES['img']['tmp_name'])){
     $subname="";
     $subname=explode('.',$_FILES['img']['name']);
     echo $subname=array_pop($subname);
-
-    
-    
+    // array_pop(取最後一個字串)
     
     // 用switch取得副檔名
     // switch($_FILES['img']['type']){
@@ -40,13 +39,27 @@ if(empty($_FILES['img']['tmp_name'])){
                     //         $subname=".gif";
                     //     break;
                     // }
-    
+    print_r($_POST);
+
     // 把檔名改成我們自己的
     $filename=date("Ymdhis").".".$subname;
 
     // 搬到我們自己的images資料夾下，更改檔名
     move_uploaded_file($_FILES['img']['tmp_name'],"./images/".$filename);
 
+    // echo照片大小
+    echo "<img src='./images/$filename' style='width:200px'>";
+
+    
+    $row=[
+        "name"=>$_FILES['name'],
+        "path"=>"./images/".$filename,
+        "type"=>$_POST['type'],
+        "note"=>$_POST['note']
+    ];
+
+    print_r($row);
+    save("upload",$row);
 }
 
 
@@ -67,7 +80,15 @@ if(empty($_FILES['img']['tmp_name'])){
  <!----建立你的表單及設定編碼----->
 
 <form action="?" method="post" enctype="multipart/form-data">
-    <input type="file" name="img">
+    <div>上傳的檔案<input type="file" name="img"></div>
+    <div>檔案說明<input type="text" name="note"></div>
+   <div>檔案類型
+    <select name="type">
+    <option value="圖檔">圖檔</option>
+    <option value="文件">文件</option>
+    <option value="其他">其他</option>
+    </select>
+    </div>
     <input type="submit" value="上傳">
 </form>
 
