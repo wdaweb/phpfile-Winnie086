@@ -6,6 +6,7 @@
  * 4.顯示檔案列表
  */
 
+// 把美國時間調成台灣時間
 date_default_timezone_set("Asia,Taipei");
 
 
@@ -40,9 +41,11 @@ if(empty($_FILES['img']['tmp_name'])){
                     //     break;
                     // }
     
-                    
-    $filename=date("Ymdhis").".".;
-    move_uploaded_file($_FILES['img']['tmp_name'],"./images/".$_FILES['img']['name']);
+    // 把檔名改成我們自己的
+    $filename=date("Ymdhis").".".$subname;
+
+    // 搬到我們自己的images資料夾下，更改檔名
+    move_uploaded_file($_FILES['img']['tmp_name'],"./images/".$filename);
 
 }
 
