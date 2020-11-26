@@ -68,6 +68,7 @@ if(empty($_FILES['img']['tmp_name'])){
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>檔案上傳</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/4233378c09.js" crossorigin="anonymous"></script>
     <style>
     table{
         border:3px double;
@@ -77,7 +78,22 @@ if(empty($_FILES['img']['tmp_name'])){
         border:1px solid #555;
         padding:5px;
     }
+    a.primary{
+        border-radius: 5px;
+        background: blue;
+        padding:3px 8px;
 
+        box-shadow:1px 1px 4px gray;
+        color:#eee;
+    }
+    a.danger{
+        border-radius: 5px;
+        background: red;
+        padding:3px 8px;
+
+        box-shadow:1px 1px 4px gray;
+        color:#eee;
+    }
 
     </style>
 </head>
@@ -109,6 +125,7 @@ echo "<td>檔案名稱</td>";
 echo "<td>檔案類型</td>";
 echo "<td>檔案說明</td>";
 echo "<td>下載</td>";
+echo "<td>操作</td>";
 
 foreach($rows as $row){
     
@@ -121,7 +138,8 @@ foreach($rows as $row){
         
     }else{
 
-        echo "<td><img src='./images/file_icon.png' style='width:100px'></td>";
+        echo "<td><i class='fas fa-file-word'></i></td>";
+        // <img src='./images/file_icon.png' style='width:100px'>
         
     }
 
@@ -129,6 +147,8 @@ foreach($rows as $row){
     echo "<td>{$row['type']}</td>";
     echo "<td>{$row['note']}</td>";
     echo "<td><a href='{$row['path']}' download>下載</a></td>";
+    echo "<td><a class='primary' href='edit.php?id={$row['id']}'>編輯</a>";
+    echo "<a class='danger' href='del.php?id={$row['id']}'>刪除</a></td>";
    
 
 
