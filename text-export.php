@@ -12,12 +12,21 @@ include_once "base.php";
 // echo $_GET['do'];
 if(!empty($_GET['do']) && $_GET['do']=='download'){
     $rows=all('students');
+
+    //寫入BOM表頭
     $file=fopen('download.csv',"w+");
+    $utf8_with_bom=chr(239).chr(187).chr(191);
+    fwrite($file,$utf8_with_bom); 
     foreach($rows as $row){
         $line=implode(',',[$row['id'],$row['name'],$row['age'],$row['birthday'],$row['addr']]);
         fwrite($file,$line);
         echo $line."-已寫入<br>";
     }
+
+    fclose($file);
+
+    $filename="download.csv";
+
 }
 
 ?>
@@ -27,7 +36,7 @@ if(!empty($_GET['do']) && $_GET['do']=='download'){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>文字檔案匯入</title>
+    <title>文字檔案匯出</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <style>
@@ -54,7 +63,7 @@ table td{
 
 </style>
 <body>
-<h1 class="header">文字檔案匯入練習</h1>
+<h1 class="header">文字檔案匯出練習</h1>
 <!---建立檔案上傳機制--->
 
 
@@ -62,8 +71,14 @@ table td{
 <!----讀出匯入完成的資料----->
 <?php
 $rows=all('students');
+if(isset($filename)){
 ?>
 
+<a href='download.csv' download>已能下載</a>
+
+<?php
+}
+?>
 <table>
     <tr>
         <td>姓名</td>
