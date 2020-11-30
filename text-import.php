@@ -17,7 +17,7 @@ if(!empty($_FILES['txt']['tmp_name'])){
 
     $num=0;
     while(!feof($file)){
-        
+
         $line=fgets($file); //執行過後，指針往下移
 
         if($num!=0){
@@ -36,6 +36,7 @@ if(!empty($_FILES['txt']['tmp_name'])){
         $num++;
     }
 
+    fclose($file);
 }
 
 
@@ -52,12 +53,11 @@ if(!empty($_FILES['txt']['tmp_name'])){
 <body>
 <h1 class="header">文字檔案匯入練習</h1>
 <!---建立檔案上傳機制--->
-<form action="?" method="post" enctype="multipart/form-data" style="">
+<form action="?" method="post" enctype="multipart/form-data" style="width:300px;margint:auto">
     <input type="file" name="txt">上傳
     <input type="submit" value="上傳">
 
 </form>
-
 
 
 
