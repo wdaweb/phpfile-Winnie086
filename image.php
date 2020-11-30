@@ -10,17 +10,18 @@
  * 5.輸出檔案
  */
 if(!empty($_FILES['photo']['tmp_name'])){
-    echo "檔案:".$_FILES['photo']['tmp_name']."<br>";
+    echo "檔案:".$_FILES['photo']['name']."<br>";
     echo "格式:".$_FILES['photo']['type']."<br>";
     echo "大小:".round($_FILES['photo']['size']/1024)."<br>";
     move_uploaded_file($_FILES['photo']['tmp_name'],"./img/".$_FILES['photo']['name']); //移動檔案
     $filename;
     $src_info=[
-        'width'=>0;
-        'height'=>0;
+        'width'=>0,
+        'height'=>0
     ];
     $dst_img=[
-
+        'width'=>0,
+        'height'=>0
     ];
 
 
@@ -117,11 +118,49 @@ if(isset($src_img) && isset($dst_img)){
     imagecopyresampled($dst_img,$src_img,$dst_info_x,$dst_info_y,0,0,$dst_width,$dst_height,$src_info['width'],$src_info['height']);
     $dst_path="./dst/".$FILES['photo']['name'];
     imagejpeg($dst_img,$dst_path);
+
+    echo "<div>";
+    echo "<img src='$dst_path'>";
+    echo "</div>";
+
 }
 ?>
 
+<h3>圖形加邊框</h3>
+<hr>
 <!----圖形加邊框----->
+<?php
 
+$border=5;
+$padding=10;
+if($src_info['direction']=='Landscape'){
+    $bor_width=($dst_info['width']-$padding*2);
+    $bor_height=($dst_info['height']-$padding*2)*$src_info['rate']; //得到高度
+    $dst_y=10+((($dst_info['height']-$padding*2)-$bor_height)/2);
+    $dst_x=10;
+}else{
+    $bor_width=($dst_info['width']-$padding*2)*(1/$src_info['rate']);
+    $bor_height=($dst_info['height']-$padding*2);
+    $dst_y=10;
+    $dst_x=10+((($dst_info['width']-$padding*2)-$bor_width)/2);
+}
+
+
+imagecopyresampled($dst_img,$src_img,$dst_x,$dst_y,0,0,$dst_width,$dst_height,$src_info['width'],$src_info['height']);
+
+imagefill($dst_img,0,0,$white);
+
+//算圖片寬高
+$bor_info=[
+    'width'=>$dst_info['width']-$padding
+
+];
+$img_bor=imagecreatetruecolor();
+
+
+
+
+?>
 
 <!----產生圖形驗證碼----->
 
